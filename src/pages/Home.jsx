@@ -397,7 +397,7 @@ const Home = () => {
         
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/50 opacity-80 -z-10"></div>
         
-        <div className="max-w-4xl mx-auto text-center relative z-10 glass !bg-white/5 !border-white/10 !shadow-2xl p-10 md:p-16 rounded-[3rem] backdrop-blur-2xl">
+        <div className="max-w-4xl mx-auto text-center relative z-10 bg-white/10 border border-white/20 shadow-2xl p-10 md:p-16 rounded-[3rem] backdrop-blur-2xl">
           <h2 className="text-5xl md:text-6xl font-extrabold mb-6 text-white tracking-tight">Join the Revolution</h2>
           <p className="text-2xl md:text-3xl font-light text-berna-green mb-8 italic font-serif drop-shadow-md">
             "Ku soo biir kacaanka beeralayda casriga ah."
