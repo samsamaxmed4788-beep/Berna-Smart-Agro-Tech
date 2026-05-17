@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Droplets, Sprout, Cpu, Activity, ShieldCheck, TrendingUp, Sun, ChevronRight } from 'lucide-react';
+import { ArrowRight, Droplets, Sprout, Cpu, Activity, ShieldCheck, TrendingUp, Sun, ChevronRight, Play, X } from 'lucide-react';
 
 const FeatureCard = ({ icon, titleEn, titleSo, descEn, descSo, delay }) => (
   <div 
@@ -36,6 +36,7 @@ const FeatureCard = ({ icon, titleEn, titleSo, descEn, descSo, delay }) => (
 
 const Home = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -85,16 +86,19 @@ const Home = () => {
               <span className="italic text-slate-500 font-serif">La-tacaalida biyo-yarida Hargeysa iyadoo la adeegsanayo habka haaydaroboonigis-ka iyo adkeysiga abaaraha oo lagu xallinayo calafka 7-da cisho ah.</span>
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-5 pt-6">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4 pt-6">
               <Link to="/invest" className="group relative px-8 py-4 rounded-2xl bg-berna-green text-white font-bold transition-all hover:shadow-[0_0_40px_-10px_rgba(46,125,50,0.8)] overflow-hidden">
                 <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
                 <span className="relative flex items-center justify-center gap-2">
-                  Invest Now / Maalgelin <TrendingUp className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  Invest / Maalgelin <TrendingUp className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </Link>
               <Link to="/dashboard" className="group px-8 py-4 rounded-2xl glass text-slate-800 dark:text-white font-bold hover:bg-white/50 dark:hover:bg-slate-800/50 transition-all flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 hover:border-berna-blue/50">
                 Live Dashboard <Activity className="w-5 h-5 group-hover:rotate-12 transition-transform text-berna-blue" />
               </Link>
+              <button onClick={() => setIsVideoModalOpen(true)} className="group px-8 py-4 rounded-2xl glass text-slate-800 dark:text-white font-bold hover:bg-white/50 dark:hover:bg-slate-800/50 transition-all flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 hover:border-red-500/50">
+                Watch Video <Play className="w-5 h-5 group-hover:scale-110 transition-transform text-red-500 fill-red-500" />
+              </button>
             </div>
           </div>
           
@@ -328,6 +332,27 @@ const Home = () => {
           </div>
         </div>
       </section>
+      {/* Video Modal */}
+      {isVideoModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm animate-fade-in-up">
+          <div className="relative w-full max-w-5xl aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/20">
+            <button 
+              onClick={() => setIsVideoModalOpen(false)}
+              className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/80 rounded-full text-white transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <iframe 
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/TCk6LeLZF0M?autoplay=1" 
+              title="YouTube video player" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
