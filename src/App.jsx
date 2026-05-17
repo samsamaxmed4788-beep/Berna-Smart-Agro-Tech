@@ -1,10 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ChatWidget from './components/ChatWidget';
 import Home from './pages/Home';
 import About from './pages/About';
 import Dashboard from './pages/Dashboard';
 import Investment from './pages/Investment';
+import Store from './pages/Store';
 import NotFound from './pages/NotFound';
 
 // Admin Pages
@@ -22,6 +24,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/store" element={<Store />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/invest" element={<Investment />} />
             
@@ -35,6 +38,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
+        <ChatWidget />
         <Footer />
       </div>
     </Router>

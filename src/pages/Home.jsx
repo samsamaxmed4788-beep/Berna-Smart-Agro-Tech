@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Droplets, Sprout, Cpu, Activity, ShieldCheck, TrendingUp, Sun, ChevronRight, Play, X } from 'lucide-react';
-
+import { ArrowRight, Droplets, Sprout, Cpu, Activity, ShieldCheck, TrendingUp, Sun, ChevronRight, Play, X, MessageSquare, Star, Quote } from 'lucide-react';
+import FeedbackModal from '../components/FeedbackModal';
 const FeatureCard = ({ icon, titleEn, titleSo, descEn, descSo, delay }) => (
   <div 
     className={`glass p-8 rounded-3xl relative overflow-hidden group hover:-translate-y-3 transition-all duration-500 animate-fade-in-up border border-white/20 dark:border-white/10 hover:shadow-2xl hover:shadow-berna-green/20 hover:border-berna-green/40`} 
@@ -37,7 +37,7 @@ const FeatureCard = ({ icon, titleEn, titleSo, descEn, descSo, delay }) => (
 const Home = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
-
+  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
@@ -309,6 +309,86 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Testimonials & Feedback Section */}
+      <section className="px-6 md:px-12 py-24 relative z-10 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div className="max-w-2xl">
+              <span className="inline-block py-1 px-3 rounded-full bg-berna-green/10 text-berna-green font-semibold text-sm mb-4 border border-berna-green/20">Client Success</span>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
+                Voices of Our <span className="text-gradient">Farmers</span>
+              </h2>
+              <p className="text-slate-600 dark:text-slate-400 text-lg">
+                See how our smart agro-tech solutions are transforming livestock farming across Somaliland.
+              </p>
+            </div>
+            <button 
+              onClick={() => setIsFeedbackModalOpen(true)}
+              className="px-6 py-3 rounded-xl bg-berna-blue text-white font-bold flex items-center gap-2 hover:bg-blue-600 transition-colors shadow-lg shadow-berna-blue/30 shrink-0 group"
+            >
+              <MessageSquare className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              Leave Your Feedback
+            </button>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Testimonial 1 */}
+            <div className="glass p-8 rounded-3xl border border-slate-200 dark:border-slate-700 hover:border-berna-green/50 transition-colors bg-slate-50 dark:bg-slate-800/50">
+              <div className="flex text-yellow-400 mb-4">
+                <Star className="w-5 h-5 fill-current" /><Star className="w-5 h-5 fill-current" /><Star className="w-5 h-5 fill-current" /><Star className="w-5 h-5 fill-current" /><Star className="w-5 h-5 fill-current" />
+              </div>
+              <p className="text-slate-700 dark:text-slate-300 italic mb-6 leading-relaxed relative z-10">
+                <Quote className="w-8 h-8 text-berna-green/20 absolute -top-4 -left-2 -z-10" />
+                "Calafkii aan ka iibsaday Berna Agro Tech si weyn ayuu wax uga beddelay caafimaadka xoolahayga xilligii jiilaalka. Waa tignoolaji waxtar weyn leh."
+              </p>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center font-bold text-slate-500">MH</div>
+                <div>
+                  <h4 className="font-bold text-slate-900 dark:text-white">Maxamed Xasan</h4>
+                  <p className="text-sm text-slate-500">Livestock Farmer, Hargeisa</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 2 */}
+            <div className="glass p-8 rounded-3xl border border-slate-200 dark:border-slate-700 hover:border-berna-blue/50 transition-colors bg-slate-50 dark:bg-slate-800/50">
+              <div className="flex text-yellow-400 mb-4">
+                <Star className="w-5 h-5 fill-current" /><Star className="w-5 h-5 fill-current" /><Star className="w-5 h-5 fill-current" /><Star className="w-5 h-5 fill-current" /><Star className="w-5 h-5 fill-current" />
+              </div>
+              <p className="text-slate-700 dark:text-slate-300 italic mb-6 leading-relaxed relative z-10">
+                <Quote className="w-8 h-8 text-berna-blue/20 absolute -top-4 -left-2 -z-10" />
+                "As an investor, the transparency of the dashboard and the high ROI from the fodder production makes this the best agro-investment in the region."
+              </p>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center font-bold text-slate-500">FJ</div>
+                <div>
+                  <h4 className="font-bold text-slate-900 dark:text-white">Fartuun Jaamac</h4>
+                  <p className="text-sm text-slate-500">Angel Investor</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 3 */}
+            <div className="glass p-8 rounded-3xl border border-slate-200 dark:border-slate-700 hover:border-berna-green/50 transition-colors bg-slate-50 dark:bg-slate-800/50">
+              <div className="flex text-yellow-400 mb-4">
+                <Star className="w-5 h-5 fill-current" /><Star className="w-5 h-5 fill-current" /><Star className="w-5 h-5 fill-current" /><Star className="w-5 h-5 fill-current" /><Star className="w-5 h-5 text-slate-300" />
+              </div>
+              <p className="text-slate-700 dark:text-slate-300 italic mb-6 leading-relaxed relative z-10">
+                <Quote className="w-8 h-8 text-berna-green/20 absolute -top-4 -left-2 -z-10" />
+                "Nidaamkan casriga ah ee xoolo-naaxinta waxaan ku arkay isbedel degdeg ah. Fikraddan in dalkeena laga hirgeliyo baahi weyn ayaa loo qabay."
+              </p>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center font-bold text-slate-500">AO</div>
+                <div>
+                  <h4 className="font-bold text-slate-900 dark:text-white">Axmed Cumar</h4>
+                  <p className="text-sm text-slate-500">Agri-business Owner</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       
       {/* CTA Section */}
       <section className="px-6 md:px-12 py-32 relative overflow-hidden flex items-center justify-center min-h-[60vh]">
@@ -332,6 +412,13 @@ const Home = () => {
           </div>
         </div>
       </section>
+      
+      {/* Feedback Modal */}
+      <FeedbackModal 
+        isOpen={isFeedbackModalOpen} 
+        onClose={() => setIsFeedbackModalOpen(false)} 
+      />
+
       {/* Video Modal */}
       {isVideoModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm animate-fade-in-up">

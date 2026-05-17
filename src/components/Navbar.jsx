@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Leaf, Activity, PieChart, Menu, X, Moon, Sun } from 'lucide-react';
+import { Leaf, Activity, PieChart, Menu, X, Moon, Sun, ShoppingCart } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +22,7 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Home', path: '/', icon: <Leaf className="w-4 h-4 mr-2" /> },
     { name: 'About Us', path: '/about', icon: <Leaf className="w-4 h-4 mr-2" /> },
+    { name: 'Fodder Store', path: '/store', icon: <ShoppingCart className="w-4 h-4 mr-2" /> },
     { name: 'IoT Dashboard', path: '/dashboard', icon: <Activity className="w-4 h-4 mr-2" /> },
     { name: 'Investment Portal', path: '/invest', icon: <PieChart className="w-4 h-4 mr-2" /> },
   ];
@@ -34,7 +35,7 @@ const Navbar = () => {
             <Leaf className="w-6 h-6" />
           </div>
           <span className="font-bold text-xl tracking-tight dark:text-white">
-            Berna<span className="text-berna-green">Tech</span>
+            Berna <span className="text-berna-green">Agro Tech</span>
           </span>
         </Link>
 

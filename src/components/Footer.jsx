@@ -16,7 +16,7 @@ const Footer = () => {
                 <Leaf className="w-6 h-6" />
               </div>
               <span className="font-bold text-xl tracking-tight text-white">
-                Berna<span className="text-berna-green">Tech</span>
+                Berna <span className="text-berna-green">Agro Tech</span>
               </span>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed">
