@@ -31,6 +31,16 @@ export const leads = pgTable('leads', {
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 })
 
-export const schema = { user, session, account, verification, organizations, organizationMembers, leads }
+export const campaigns = pgTable('campaigns', {
+  id: text('id').primaryKey(), organizationId: text('organization_id').notNull(), createdBy: text('created_by').notNull(), name: text('name').notNull(), objective: text('objective'), status: text('status').notNull().default('draft'), budgetCents: integer('budget_cents').notNull().default(0), startDate: text('start_date'), endDate: text('end_date'), createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(), updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+})
+export const campaignChannels = pgTable('campaign_channels', {
+  id: text('id').primaryKey(), campaignId: text('campaign_id').notNull(), channel: text('channel').notNull(), status: text('status').notNull().default('planned'), scheduledAt: timestamp('scheduled_at', { withTimezone: true }), spendCents: integer('spend_cents').notNull().default(0), createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(), updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+})
+export const contentCalendarItems = pgTable('content_calendar_items', {
+  id: text('id').primaryKey(), organizationId: text('organization_id').notNull(), createdBy: text('created_by').notNull(), campaignId: text('campaign_id'), title: text('title').notNull(), channel: text('channel').notNull(), status: text('status').notNull().default('idea'), scheduledFor: timestamp('scheduled_for', { withTimezone: true }), owner: text('owner'), brief: text('brief'), createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(), updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+})
+
+export const schema = { user, session, account, verification, organizations, organizationMembers, leads, campaigns, campaignChannels, contentCalendarItems }
 export type Organization = typeof organizations.$inferSelect
 export type OrganizationMember = typeof organizationMembers.$inferSelect
