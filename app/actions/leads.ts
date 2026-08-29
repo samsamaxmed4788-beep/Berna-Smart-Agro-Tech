@@ -1,19 +1,13 @@
 'use server'
 
 import { and, desc, eq } from 'drizzle-orm'
-import { headers } from 'next/headers'
 import { revalidatePath } from 'next/cache'
-import { auth } from '@/lib/auth'
 import { db } from '@/lib/db'
-import { leads, organizationMembers } from '@/lib/db/schema'
+import { leads } from '@/lib/db/schema'
+import { requireOrganizationContext } from '@/lib/authorization'
 
 async function getContext() {
-  const session = await auth.api.getSession({ headers: await headers() })
-  if (!session?.user) throw new Error('Unauthorized')
-  const membership = await db.select({ organizationId: organizationMembers.organizationId })
-    .from(organizationMembers).where(eq(organizationMembers.userId, session.user.id)).limit(1)
-  if (!membership[0]) throw new Error('Organization membership required')
-  return { userId: session.user.id, organizationId: membership[0].organizationId }
+  return requireOrganizationContext('member')
 }
 
 export async function listLeads() {

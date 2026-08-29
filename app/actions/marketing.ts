@@ -1,19 +1,13 @@
 'use server'
 
-import { headers } from 'next/headers'
 import { revalidatePath } from 'next/cache'
-import { auth } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { campaigns, contentCalendarItems } from '@/lib/db/schema'
-import { getMembership } from '@/lib/organization'
+import { requireOrganizationContext } from '@/lib/authorization'
 import { eq } from 'drizzle-orm'
 
 async function context() {
-  const session = await auth.api.getSession({ headers: await headers() })
-  if (!session?.user) throw new Error('Unauthorized')
-  const membership = await getMembership(session.user.id)
-  if (!membership[0]) throw new Error('Organization membership required')
-  return { userId: session.user.id, organizationId: membership[0].organization.id }
+  return requireOrganizationContext('member')
 }
 
 export async function createCampaign(input: { name: string; objective: string; budgetCents: number }) {
