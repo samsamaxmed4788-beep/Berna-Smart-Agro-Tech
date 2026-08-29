@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { LeadsPanel } from '@/components/leads-panel'
 import { MarketingPanel } from '@/components/marketing-panel'
 import { AboutPanel } from '@/components/about-panel'
+import type { listMarketingData } from '@/app/actions/marketing'
 import {
   Activity,
   BarChart3,
@@ -40,7 +41,7 @@ const files = ['README.md', 'nexora.config.ts', 'growth-plan.md', 'agent.ts']
 
 type WorkspaceLead = { id: string; firstName: string; lastName: string | null; email: string | null; company: string | null; status: string; score: number; valueCents: number }
 
-export function NexoraWorkspace({ initialLeads = [] }: { initialLeads?: WorkspaceLead[] }) {
+export function NexoraWorkspace({ initialLeads = [], initialMarketing }: { initialLeads?: WorkspaceLead[]; initialMarketing: Awaited<ReturnType<typeof listMarketingData>> }) {
   const [activeNav, setActiveNav] = useState('Overview')
   const [activeFile, setActiveFile] = useState('README.md')
   const [showEditor, setShowEditor] = useState(true)
@@ -75,7 +76,7 @@ export function NexoraWorkspace({ initialLeads = [] }: { initialLeads?: Workspac
               {activeNav === 'About Us' && <AboutPanel />}
               {activeNav !== 'About Us' && <>
               {activeNav === 'Leads & CRM' && <LeadsPanel initialLeads={initialLeads} />}
-              {activeNav === 'Marketing' && <MarketingPanel />}
+              {activeNav === 'Marketing' && <MarketingPanel initialData={initialMarketing} />}
               <div className="grid gap-3 sm:grid-cols-3"><Metric label="Pipeline value" value="$184.2k" trend="+18.4%" /><Metric label="Qualified leads" value="248" trend="+12.8%" /><Metric label="Marketing ROI" value="3.8x" trend="+0.6x" /></div>
               <div className="rounded-xl border border-border bg-card"><div className="flex items-center justify-between border-b border-border px-5 py-4"><div><p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Command center</p><h2 className="mt-1 text-sm font-semibold">Business momentum</h2></div><button className="text-muted-foreground hover:text-foreground"><MoreHorizontal className="size-4" /></button></div><div className="p-5"><div className="flex h-48 items-end gap-2 sm:gap-3">{[35,48,42,67,58,76,71,88,82,96,90,100].map((height, index) => <div key={index} className="group flex flex-1 flex-col items-center gap-2"><div className="relative w-full rounded-sm bg-primary/15 transition-colors group-hover:bg-primary/35" style={{ height: `${height}%` }}><div className="absolute inset-x-0 bottom-0 rounded-sm bg-primary" style={{ height: `${Math.max(12, height - 24)}%` }} /></div><span className="font-mono text-[9px] text-muted-foreground">{['J','F','M','A','M','J','J','A','S','O','N','D'][index]}</span></div>)}</div><div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[11px] text-muted-foreground"><span className="flex items-center gap-2"><i className="size-2 rounded-full bg-primary" />Revenue influenced</span><span className="flex items-center gap-2"><i className="size-2 rounded-full bg-primary/20" />Opportunity volume</span></div></div></div>
               <div className="rounded-xl border border-border bg-card"><div className="flex items-center justify-between border-b border-border px-5 py-4"><div><p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Activity stream</p><h2 className="mt-1 text-sm font-semibold">Latest signals</h2></div><button className="text-xs text-primary hover:underline">View all</button></div><div className="divide-y divide-border">{[['Campaign reached 12.4k people','Marketing','8 min ago'],['New high-intent lead: Farah Labs','CRM','42 min ago'],['Content brief ready for review','Content','2 hr ago']].map(([title, tag, time]) => <div key={title} className="flex items-center gap-3 px-5 py-4"><div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-accent">{tag === 'CRM' ? <Users className="size-3.5 text-primary" /> : tag === 'Content' ? <FileCode2 className="size-3.5 text-primary" /> : <Activity className="size-3.5 text-primary" />}</div><div className="min-w-0 flex-1"><p className="truncate text-xs font-medium">{title}</p><p className="mt-1 text-[11px] text-muted-foreground">{tag} · {time}</p></div><ChevronDown className="size-3 -rotate-90 text-muted-foreground" /></div>)}</div></div>

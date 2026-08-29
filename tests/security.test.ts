@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { canAccessOrganization, canManageRole } from '@/lib/tenant-security'
+import { campaignStatuses, contentStatuses, marketingChannels } from '@/lib/marketing-constants'
 
 describe('foundation authorization', () => {
   it('rejects unauthenticated or unknown organization access', () => {
@@ -25,6 +26,21 @@ describe('foundation authorization', () => {
     expect(canAccessOrganization('org-a', organizationBLead)).toBe(false)
     expect(canAccessOrganization('org-a', organizationA)).toBe(true)
     expect(canAccessOrganization('org-a', organizationBLead)).toBe(false)
+  })
+
+  it('defines marketing channels and lifecycle statuses', () => {
+    expect(marketingChannels).toContain('Facebook')
+    expect(marketingChannels).toContain('WhatsApp')
+    expect(campaignStatuses).toContain('active')
+    expect(contentStatuses).toContain('scheduled')
+  })
+
+  it('denies cross-organization campaign, channel, and calendar access', () => {
+    const orgA = { organizationId: 'org-a' }
+    const orgB = { organizationId: 'org-b' }
+    expect(canAccessOrganization('org-a', orgA)).toBe(true)
+    expect(canAccessOrganization('org-a', orgB)).toBe(false)
+    expect(canAccessOrganization('org-b', orgA)).toBe(false)
   })
 
   it('enforces role hierarchy', () => {
