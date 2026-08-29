@@ -47,6 +47,13 @@ export const contentCalendarItems = pgTable('content_calendar_items', {
   id: text('id').primaryKey(), organizationId: text('organization_id').notNull(), createdBy: text('created_by').notNull(), campaignId: text('campaign_id'), title: text('title').notNull(), channel: text('channel').notNull(), status: text('status').notNull().default('idea'), scheduledFor: timestamp('scheduled_for', { withTimezone: true }), owner: text('owner'), brief: text('brief'), content: text('content'), notes: text('notes'), createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(), updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 })
 
-export const schema = { user, session, account, verification, organizations, organizationMembers, leads, leadNotes, campaigns, campaignChannels, contentCalendarItems }
+export const conversations = pgTable('conversations', {
+  id: text('id').primaryKey(), organizationId: text('organization_id').notNull(), userId: text('user_id').notNull(), title: text('title').notNull().default('New conversation'), createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(), updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+})
+export const conversationMessages = pgTable('conversation_messages', {
+  id: text('id').primaryKey(), organizationId: text('organization_id').notNull(), conversationId: text('conversation_id').notNull(), userId: text('user_id').notNull(), role: text('role').notNull(), content: text('content').notNull(), responseJson: jsonb('response_json').$type<Record<string, unknown>>(), createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+})
+
+export const schema = { user, session, account, verification, organizations, organizationMembers, leads, leadNotes, campaigns, campaignChannels, contentCalendarItems, conversations, conversationMessages }
 export type Organization = typeof organizations.$inferSelect
 export type OrganizationMember = typeof organizationMembers.$inferSelect
