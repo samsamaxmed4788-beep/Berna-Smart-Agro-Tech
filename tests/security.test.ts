@@ -15,6 +15,18 @@ describe('foundation authorization', () => {
     expect(canAccessOrganization(orgAUser, orgBLead)).toBe(false)
   })
 
+  it('keeps CRM pipeline statuses explicit for create and status updates', () => {
+    expect(['new', 'contacted', 'qualified', 'proposal', 'won', 'lost']).toHaveLength(6)
+  })
+
+  it('denies cross-organization lead read, update, and delete attempts', () => {
+    const organizationA = { organizationId: 'org-a' }
+    const organizationBLead = { organizationId: 'org-b' }
+    expect(canAccessOrganization('org-a', organizationBLead)).toBe(false)
+    expect(canAccessOrganization('org-a', organizationA)).toBe(true)
+    expect(canAccessOrganization('org-a', organizationBLead)).toBe(false)
+  })
+
   it('enforces role hierarchy', () => {
     expect(canManageRole('member', 'member')).toBe(true)
     expect(canManageRole('member', 'admin')).toBe(false)

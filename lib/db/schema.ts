@@ -13,6 +13,10 @@ export const verification = pgTable('verification', { id: text('id').primaryKey(
 
 export const organizations = pgTable('organizations', { id: text('id').primaryKey(), name: text('name').notNull(), slug: text('slug').notNull(), logoUrl: text('logo_url'), settings: jsonb('settings').$type<Record<string, unknown>>().notNull().default({}), createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(), updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow() }, (table) => ({ slugUnique: uniqueIndex('organizations_slug_unique').on(table.slug) }))
 export const organizationMembers = pgTable('organization_members', { organizationId: text('organization_id').notNull(), userId: text('user_id').notNull(), role: text('role').notNull().default('member'), createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow() }, (table) => ({ membershipPrimaryKey: primaryKey({ columns: [table.organizationId, table.userId] }) }))
+export const leadNotes = pgTable('lead_notes', {
+  id: text('id').primaryKey(), organizationId: text('organization_id').notNull(), leadId: text('lead_id').notNull(), authorId: text('author_id').notNull(), body: text('body').notNull(), createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(), updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+})
+
 export const leads = pgTable('leads', {
   id: text('id').primaryKey(),
   organizationId: text('organization_id').notNull(),
@@ -26,6 +30,7 @@ export const leads = pgTable('leads', {
   status: text('status').notNull().default('new'),
   score: integer('score').notNull().default(0),
   valueCents: integer('value_cents').notNull().default(0),
+  assignedMemberId: text('assigned_member_id'),
   notes: text('notes'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
@@ -41,6 +46,6 @@ export const contentCalendarItems = pgTable('content_calendar_items', {
   id: text('id').primaryKey(), organizationId: text('organization_id').notNull(), createdBy: text('created_by').notNull(), campaignId: text('campaign_id'), title: text('title').notNull(), channel: text('channel').notNull(), status: text('status').notNull().default('idea'), scheduledFor: timestamp('scheduled_for', { withTimezone: true }), owner: text('owner'), brief: text('brief'), createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(), updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 })
 
-export const schema = { user, session, account, verification, organizations, organizationMembers, leads, campaigns, campaignChannels, contentCalendarItems }
+export const schema = { user, session, account, verification, organizations, organizationMembers, leads, leadNotes, campaigns, campaignChannels, contentCalendarItems }
 export type Organization = typeof organizations.$inferSelect
 export type OrganizationMember = typeof organizationMembers.$inferSelect
