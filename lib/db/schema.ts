@@ -31,6 +31,7 @@ export const leads = pgTable('leads', {
   score: integer('score').notNull().default(0),
   valueCents: integer('value_cents').notNull().default(0),
   assignedMemberId: text('assigned_member_id'),
+  campaignId: text('campaign_id'),
   notes: text('notes'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),

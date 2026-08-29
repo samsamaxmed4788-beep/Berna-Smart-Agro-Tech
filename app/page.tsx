@@ -6,6 +6,7 @@ import { auth } from '@/lib/auth'
 import { ensureDefaultOrganization, getMembership } from '@/lib/organization'
 import { listLeads } from '@/app/actions/leads'
 import { listMarketingData } from '@/app/actions/marketing'
+import { getAnalytics } from '@/app/actions/analytics'
 
 export default async function Page() {
   const session = await auth.api.getSession({ headers: await headers() })
@@ -14,5 +15,6 @@ export default async function Page() {
   const membership = await getMembership(session.user.id)
   const initialLeads = await listLeads()
   const initialMarketing = await listMarketingData()
-  return <><header className="fixed right-4 top-4 z-50"><ProfilePanel name={session.user.name} email={session.user.email} organization={membership[0]?.organization.name ?? 'Workspace'} /></header><NexoraWorkspace initialLeads={initialLeads} initialMarketing={initialMarketing} /></>
+  const initialAnalytics = await getAnalytics()
+  return <><header className="fixed right-4 top-4 z-50"><ProfilePanel name={session.user.name} email={session.user.email} organization={membership[0]?.organization.name ?? 'Workspace'} /></header><NexoraWorkspace initialLeads={initialLeads} initialMarketing={initialMarketing} initialAnalytics={initialAnalytics} /></>
 }
